@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_serializer import SerializerMin
+
 
 db = SQLAlchemy()
 
-class Message(db.Model):
+class Message(db.Model, SerializerMin):
     __tablename__ = 'messages'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,3 +15,10 @@ class Message(db.Model):
     def __repr__(self):
         return f'<Message {self.id}>'
     
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'timestamp': self.timestamp.isoformat(),
+            'message_body': self.message_body,
+        }
