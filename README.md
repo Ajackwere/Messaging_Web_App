@@ -6,6 +6,8 @@ A simple messaging web application built with Flask for handling customer inquir
 
 - **Messaging System:** Allows agents to respond to customer inquiries.
 - **Serialization:** Uses SQLAlchemy's SerializerMixin for easy serialization of Message objects.
+- **Search Functionality:** Enables agents to search for messages based on specific criteria.
+- **Message Assignment:** Implements a system for assigning and claiming messages by agents.
 
 ### Prerequisites
 
