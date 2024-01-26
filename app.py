@@ -64,7 +64,30 @@ def claim_message(message_id):
             return jsonify({'status': 'error', 'message': f'Message {message_id} is already assigned.'}), 400
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
+@app.route('/search', methods=['GET'])
+def search_messages():
+    try:
+        user_id = request.args.get('user_id')
+        timestamp = request.args.get('timestamp')
+        keyword = request.args.get('keyword')
 
+        query = Message.query
+
+        if user_id:
+            query = query.filter(Message.user_id == user_id)
+        if timestamp:
+            query = query.filter(Message.timestamp == timestamp)
+        if keyword:
+            query = query.filter(Message.message_body.ilike(f'%{keyword}%'))
+
+        search_results = query.all()
+
+        serialized_results = [message.serialize() for message in search_results]
+
+        return jsonify({'status': 'success', 'results': serialized_results}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+    
 # @app.route('/update_null_statuses', methods=['GET'])
 # def update_null_statuses():
 #     try:
