@@ -11,5 +11,5 @@ class Message(db.Model):
     message_body = db.Column(db.Text)
 
     def __repr__(self):
-        return f'<Message {self.id} - Status: {self.status}>'
+        return f'<Message {self.id}>'
     
