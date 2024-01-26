@@ -8,9 +8,9 @@ class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, server_default=db.func.now())
-    message_body = db.Column(db.Text)
+    message_body = db.Column(db.String(255))
     status = db.Column(db.String(20), default='unassigned')
 
 
