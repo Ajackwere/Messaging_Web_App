@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Portal</title>
+</head>
+<body>
+    <h1>Agent Portal</h1>
+    <ul>
+        {% for message in messages %}
+            <li>
+                <strong>User ID:</strong> {{ message.user_id }} |
+                <strong>Timestamp:</strong> {{ message.timestamp }} |
+                <strong>Message:</strong> {{ message.message_body }}
+                <a href="{{ url_for('respond', message_id=message.id) }}">Respond</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

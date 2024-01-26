@@ -7,7 +7,7 @@ class Message(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
-    timestamp = db.Column(db.Datetime, server_default=db.func.now())
+    timestamp = db.Column(db.DateTime, server_default=db.func.now())
     message_body = db.Column(db.Text)
 
     def __repr__(self):
