@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
+# from sqlalchemy import text
+
 
 from models import Message, db
 
@@ -53,7 +55,7 @@ def assign_message(message_id):
 @app.route('/claim/<int:message_id>', methods=['POST'])
 def claim_message(message_id):
     try:
-        message = Message.query.get(message_id)
+        message = db.session.get(Message, message_id)
         if message.status == 'unassigned':
             message.status = 'assigned'
             db.session.commit()
@@ -63,5 +65,16 @@ def claim_message(message_id):
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+# @app.route('/update_null_statuses', methods=['GET'])
+# def update_null_statuses():
+#     try:
+#         # Update all rows where status is NULL to 'unassigned'
+#         db.session.execute(text("UPDATE messages SET status = 'unassigned' WHERE status IS NULL"))
+#         db.session.commit()
+
+#         return jsonify({'status': 'success', 'message': 'Null statuses updated successfully.'}), 200
+#     except Exception as e:
+#         return jsonify({'status': 'error', 'message': str(e)}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
